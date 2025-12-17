@@ -1,5 +1,6 @@
 # Manufacturing-Ai-agent
 LLM-based AI agent service for analyzing manufacturing equipment alarms and generating actionable insights
+
 제조 설비에서 발생하는 이상 알람을 분석하여
 원인 추정 및 조치 가이드를 제공하는 AI Agent 서비스
 
