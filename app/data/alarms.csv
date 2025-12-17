@@ -1,0 +1,4 @@
+timestamp,equipment_id,process,alarm_code,alarm_message
+2025-01-03 10:12,INJ-01,Injection,E101,Injection pressure exceeded limit
+2025-01-03 11:05,INJ-02,Injection,E203,Heater temperature unstable
+2025-01-04 09:42,CNC-01,Machining,E305,Spindle vibration detected
