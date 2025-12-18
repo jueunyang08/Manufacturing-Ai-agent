@@ -9,7 +9,7 @@ __pycache__/
 *$py.class
 
 # 3. 로컬 벡터 DB 데이터
-db/chroma_db/
+app/db/chroma_db/
 
 # 4. OS 및 IDE 관련
 .DS_Store
