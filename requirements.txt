@@ -1,0 +1,14 @@
+# AI SDK
+google-generativeai
+
+# Frontend (UI)
+streamlit
+
+# Vector Database (RAG)
+chromadb
+
+# Data Processing
+pandas
+python-dotenv
+
+#numpy

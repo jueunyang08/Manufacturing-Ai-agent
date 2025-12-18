@@ -1,0 +1,21 @@
+# 1
+.env
+
+# 2. 파이썬 가상환경 및 캐시
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 3. 로컬 벡터 DB 데이터
+db/chroma_db/
+
+# 4. OS 및 IDE 관련
+.DS_Store
+.vscode/
+.idea/
+
+# 5. 임시 파일 및 로그
+*.log
+.ipynb_checkpoints/

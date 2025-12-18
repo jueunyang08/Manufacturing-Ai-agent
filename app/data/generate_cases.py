@@ -1,0 +1,21 @@
+import json
+import os
+
+cases = [
+    {"alarm_code": "E101", "root_cause": "Hydraulic pressure valve malfunction", "action": "Inspect pressure valve and replace if necessary", "prevention": "Regular oil pressure calibration"},
+    {"alarm_code": "E203", "root_cause": "Heater element degradation", "action": "Replace heater band and check thermocouple wiring", "prevention": "Quarterly heater resistance check"},
+    {"alarm_code": "E305", "root_cause": "Spindle bearing wear", "action": "Replace spindle bearings and check lubrication system", "prevention": "Monitor spindle vibration levels weekly"},
+    {"alarm_code": "E401", "root_cause": "Coolant pump motor failure", "action": "Check motor winding and replace pump if burnt", "prevention": "Clean coolant tank and filters monthly"},
+    {"alarm_code": "E502", "root_cause": "Emergency stop button stuck", "action": "Release button and check contact block continuity", "prevention": "Daily check of safety devices"},
+    {"alarm_code": "E607", "root_cause": "Servo motor encoder error", "action": "Clean encoder cable connectors or replace cable", "prevention": "Ensure cable tray has no sharp bends"},
+    {"alarm_code": "E701", "root_cause": "Air pressure drop", "action": "Check for air leaks in pneumatic lines and compressor status", "prevention": "Daily drain of air compressor moisture"},
+    {"alarm_code": "E810", "root_cause": "PLC communication timeout", "action": "Reset PLC and check ethernet cable connection", "prevention": "Update firmware and secure cable ports"},
+    {"alarm_code": "E905", "root_cause": "Limit switch sensor faulty", "action": "Adjust sensor position or replace faulty proximity switch", "prevention": "Check for metal debris near sensors"},
+    {"alarm_code": "E102", "root_cause": "Injection nozzle clogging", "action": "Purge material and clean nozzle tip", "prevention": "Use high-quality raw materials and monitor melt temp"}
+]
+
+os.makedirs('data', exist_ok=True)
+with open('data/case.json', 'w', encoding='utf-8') as f:
+    json.dump(cases, f, ensure_ascii=False, indent=2)
+
+print("case.json 파일이 생성되었습니다.")

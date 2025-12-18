@@ -1,8 +1,0 @@
-[
-  {
-    "alarm_code": "E101",
-    "root_cause": "Hydraulic pressure valve malfunction",
-    "action": "Inspect pressure valve and replace if necessary",
-    "prevention": "Regular oil pressure calibration"
-  }
-]
