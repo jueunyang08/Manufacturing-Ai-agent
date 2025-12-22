@@ -27,13 +27,47 @@ def init_agents():
 
 root_agent, retrieval_agent, action_agent = init_agents()
 
-# 사이드바: 데이터 확인
-st.sidebar.header("설정 및 데이터")
-if st.sidebar.button("최근 알람 로그 불러오기"):
-    df = pd.read_csv("data/alarms.csv")
-    st.sidebar.dataframe(df.tail(5))
+# 1. 세션 상태 초기화 (결과를 저장할 바구니 만들기)
+if 'analysis_result' not in st.session_state:
+    st.session_state.analysis_result = None
 
-# 메인 화면: 입력 폼
+if 'recent_logs' not in st.session_state:
+    st.session_state.recent_logs = None
+
+# 2. 사이드바 영역
+with st.sidebar:
+    st.header("📋 설정 및 데이터")
+
+    # 로그 불러오기 버튼
+    if st.sidebar.button("최근 알람 로그 불러오기"):
+        # 파일을 읽어서 세션 가방에 저장
+        try:
+            df = pd.read_csv("data/alarms.csv")
+            st.session_state.recent_logs = df.tail(10) # 최근 10개 저장
+        except Exception as e:
+            st.error(f"로그를 읽을 수 없습니다: {e}")
+    # 로그 지우기 버튼
+    if st.session_state.recent_logs is not None:
+        if st.button("로그 화면 닫기"):
+            st.session_state.recent_logs = None
+            st.rerun() # 화면 즉시 갱신
+
+    st.divider()
+
+    # 가방에 로그가 들어있다면 사이드바에 계속 표시
+    if st.session_state.recent_logs is not None:
+        st.subheader("최근 발생 알람 (Last 10)")
+        st.dataframe(
+            st.session_state.recent_logs, 
+            hide_index=True,
+            column_config={
+                "timestamp": "시간",
+                "equipment_id": "설비ID",
+                "alarm_message": "메시지"
+            }
+        )
+
+# 3. 메인 영역
 with st.form("alarm_input_form"):
     st.subheader("알람 정보 입력")
     col1, col2, col3 = st.columns(3)
@@ -63,9 +97,20 @@ if submit_button:
             # 3. Action Recommendation
             final_report = action_agent.generate_recommendation(causes, similar_cases)
 
+
+            # 결과를 세션 상태에 저장
+            st.session_state.analysis_result = {
+                "causes": causes,
+                "similar_cases": similar_cases,
+                "final_report": final_report
+            }
+
+    # 세션 상태에 데이터가 있으면 화면에 계속 표시
+    if st.session_state.analysis_result:
+        res = st.session_state.analysis_result
+
         # 결과 레이아웃 구성
         st.divider()
-        
         c1, c2 = st.columns(2)
         
         with c1:
@@ -81,6 +126,6 @@ if submit_button:
                     st.info(f"**과거 알람:** {case.get('alarm_code')}\n\n**원인:** {case.get('root_cause')}\n\n**조치:** {case.get('action')}")
             else:
                 st.write("유사 사례가 발견되지 않았습니다.")
-
-        st.subheader("📋 3. AI 최종 권고 조치 가이드")
+            
+        st.subheader("⚠️ 최종 분석 리포트")
         st.success(final_report)
